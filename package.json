@@ -1,0 +1,12 @@
+{
+  "name": "chrstms",
+  "version": "1.0.0",
+  "description": "Christmas Tree Action @ RWTH Aachen University",
+  "main": "public/index.html",
+  "dependencies": {
+    "tailwindcss": "^1.9.5"
+  },
+  "devDependencies": {},
+  "author": "Johannes Schäfer <mail@johannes-schaefer.de>",
+  "license": "MIT"
+}

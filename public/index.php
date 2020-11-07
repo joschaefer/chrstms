@@ -12,10 +12,11 @@ ini_set('expose_php', 'off');
 header_remove('X-Powered-By');
 
 require __DIR__ . '/../vendor/autoload.php';
+$settings = require __DIR__ . '/../settings.php';
 
 Carbon::setLocale('de_DE');
 
-$pdo = new PDO('mysql:dbname=chrstms;host=localhost;charset=utf8mb4', 'chrstms', '-D)[b{K#FrZ(./Gk_z/Z>kHUnn~Tr+,MP2UHz:[l)q=cda3uYTNoKB3,O_-Ql,=I', [
+$pdo = new PDO(sprintf('mysql:dbname=%s;host=%s;port=%d;charset=utf8mb4', $settings['db']['database'], $settings['db']['host'], $settings['db']['port']), $settings['db']['username'], $settings['db']['password'], [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_PERSISTENT => false,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
@@ -56,6 +57,7 @@ $gifts = $query->fetchAll();
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Weihnachtsbaumaktion</title>
     <link rel="stylesheet" href="style.css">
 </head>

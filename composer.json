@@ -1,5 +1,16 @@
 {
+    "name": "joschaefer/chrstms",
+    "version": "1.0.0",
+    "description": "Weihnachtsbaumaktion @ RWTH Aachen University",
     "require": {
-        "nesbot/carbon": "^2.41"
-    }
+        "nesbot/carbon": "^2.41",
+        "ext-pdo": "*"
+    },
+    "authors": [
+        {
+            "name": "Johannes Schäfer",
+            "email": "mail@johannes-schaefer.de"
+        }
+    ],
+    "license": "MIT"
 }

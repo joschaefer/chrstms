@@ -4,12 +4,17 @@
     "description": "Weihnachtsbaumaktion @ RWTH Aachen University",
     "main": "public/",
     "scripts": {
-        "style": "npx tailwindcss build style.css -o public/style.css"
+        "style": "postcss style.css -o public/style.css"
     },
-    "dependencies": {
+    "dependencies": {},
+    "devDependencies": {
+        "autoprefixer": "^10.0.1",
+        "cssnano": "^4.1.10",
+        "postcss": "^8.1.6",
+        "postcss-cli": "^8.2.0",
         "tailwindcss": "^1.9.6"
     },
-    "devDependencies": {},
     "author": "Johannes Schäfer <mail@johannes-schaefer.de>",
-    "license": "MIT"
+    "license": "MIT",
+    "repository": "github:joschaefer/chrstms"
 }

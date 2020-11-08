@@ -40,24 +40,24 @@ $gifts = $query->fetchAll();
     <title>Weihnachtsbaumaktion: Geschenke</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="font-sans antialiased text-gray-900">
+<body>
 
 <div class="px-5 py-6 max-w-screen-xl mx-auto">
-    <table class="table-auto w-full">
+    <table>
         <tr>
-            <th class="px-4 py-2">Person</th>
-            <th class="px-4 py-2">E-Mail</th>
-            <th class="px-4 py-2">Team</th>
-            <th class="px-4 py-2">Geschenk</th>
-            <th class="px-4 py-2">Datum</th>
+            <th>Person</th>
+            <th>E-Mail</th>
+            <th>Team</th>
+            <th>Geschenk</th>
+            <th>Datum</th>
         </tr>
         <?php foreach ($gifts as $gift): ?>
             <tr>
-                <td class="border px-4 py-2"><?= htmlentities($gift->donor); ?></td>
-                <td class="border px-4 py-2"><?= htmlentities($gift->email); ?></td>
-                <td class="border px-4 py-2"><?= htmlentities($gift->affiliation); ?></td>
-                <td class="border px-4 py-2"><?= htmlentities($gift->description); ?> für <?= htmlentities($gift->name); ?></td>
-                <td class="border px-4 py-2"><?= (new Carbon($gift->created_at))->diffForHumans(); ?></td>
+                <td><?= htmlentities($gift->donor); ?></td>
+                <td><?= htmlentities($gift->email); ?></td>
+                <td><?= htmlentities($gift->affiliation); ?></td>
+                <td><?= htmlentities($gift->description); ?> für <?= htmlentities($gift->name); ?></td>
+                <td><?= (new Carbon($gift->created_at))->diffForHumans(); ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

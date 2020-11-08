@@ -61,17 +61,15 @@ $gifts = $query->fetchAll();
     <title>Weihnachtsbaumaktion</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="font-sans antialiased text-gray-900">
+<body>
 
 <form action="/" method="post">
 
-    <div class="bg-white">
-        <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-            <h1 class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
-                RWTH Weihnachtsbaumaktion<br>
-                <span class="text-red-800">Läuft ab <?= Carbon::createFromDate(2020, 12, 5)->diffForHumans(); ?>.</span>
-            </h1>
-        </div>
+    <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+        <h1 class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
+            RWTH Weihnachtsbaumaktion<br>
+            <span class="text-red-800">Läuft ab <?= Carbon::createFromDate(2020, 12, 5)->diffForHumans(); ?>.</span>
+        </h1>
     </div>
 
     <div class="mt-5 bg-chrstms">
@@ -80,13 +78,13 @@ $gifts = $query->fetchAll();
                 Geschenke
                 <span class="block text-gray-800 text-lg mt-3 font-normal">Bitte ein Geschenk auswählen und anschließend Kontaktdaten angeben:</span>
             </h2>
-            <div class="flex flex-wrap -mx-2 -mb-3">
+            <div class="gifts">
                 <?php foreach ($gifts as $gift): ?>
-                    <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 pb-4">
-                        <label class="block rounded overflow-hidden bg-white px-6 py-4 cursor-pointer border-gray-600 border-2 shadow" for="gift-<?= $gift->id; ?>">
-                            <h3 class="font-bold text-gray-900 text-xl mb-2"><?= htmlentities($gift->name); ?>, <?= htmlentities($gift->age); ?> Jahre</h3>
-                            <p class="text-gray-700 text-base"><?= htmlentities($gift->description); ?></p>
-                            <p class="text-center mt-2"><input type="radio" name="gift" value="<?= $gift->id; ?>" id="gift-<?= $gift->id; ?>" required></p>
+                    <div class="gift">
+                        <label class="gift-label" for="gift-<?= $gift->id; ?>">
+                            <h3 class="gift-title"><?= htmlentities($gift->name); ?>, <?= htmlentities($gift->age); ?> Jahre</h3>
+                            <p class="gift-description"><?= htmlentities($gift->description); ?></p>
+                            <p class="text-center"><input type="radio" name="gift" value="<?= $gift->id; ?>" id="gift-<?= $gift->id; ?>" required></p>
                         </label>
                     </div>
                 <?php endforeach; ?>
@@ -105,29 +103,29 @@ $gifts = $query->fetchAll();
                     Kontaktdaten
                 </h2>
                 <div class="w-full max-w-lg">
-                    <div class="md:flex md:items-center mb-6">
+                    <div class="form-group">
                         <div class="md:w-1/4">
-                            <label class="block font-bold mb-1 md:mb-0 pr-4" for="name">Name:</label>
+                            <label class="form-label" for="name">Name:</label>
                         </div>
                         <div class="md:w-3/4">
-                            <input class="bg-white appearance-none border-2 border-gray-600 rounded w-full py-2 px-4 text-gray-600 leading-tight focus:outline-none focus:border-red-700" name="name" id="name" type="text" placeholder="Vor- und Nachname" autocomplete="name" required>
+                            <input class="form-input" name="name" id="name" type="text" placeholder="Vor- und Nachname" autocomplete="name" required>
                         </div>
                     </div>
-                    <div class="md:flex md:items-center mb-6">
+                    <div class="form-group">
                         <div class="md:w-1/4">
-                            <label class="block font-bold mb-1 md:mb-0 pr-4" for="email">E-Mail:</label>
+                            <label class="form-label" for="email">E-Mail:</label>
                         </div>
                         <div class="md:w-3/4">
-                            <input class="bg-white appearance-none border-2 border-gray-600 rounded w-full py-2 px-4 text-gray-600 leading-tight focus:outline-none focus:border-red-700" name="email" id="email" type="email" placeholder="E-Mail-Adresse" autocomplete="email" required>
+                            <input class="form-input" name="email" id="email" type="email" placeholder="E-Mail-Adresse" autocomplete="email" required>
                         </div>
                     </div>
-                    <div class="md:flex md:items-center mb-6">
+                    <div class="form-group">
                         <div class="md:w-1/4">
-                            <label class="block font-bold mb-1 md:mb-0 pr-4" for="affiliation">Team:</label>
+                            <label class="form-label" for="affiliation">Team:</label>
                         </div>
                         <div class="md:w-3/4">
                             <div class="inline-block relative w-full">
-                                <select class="block bg-white appearance-none border-2 border-gray-600 rounded w-full py-2 pl-4 pr-8 text-gray-600 leading-tight focus:outline-none focus:border-red-700" name="affiliation" id="affiliation" required>
+                                <select class="form-select" name="affiliation" id="affiliation" required>
                                     <option selected disabled>Team wählen</option>
                                     <option value="digitalHUB">digitalHUB</option>
                                     <option value="Lehrstuhl">WIN-Lehrstuhl</option>
@@ -140,8 +138,8 @@ $gifts = $query->fetchAll();
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-700 text-sm mb-4">Mit dem Abschicken des Formulars erkläre ich mich einverstanden, dass meine angegebenen Daten für die Organisation der Weihnachtsbaumaktion gespeichert und verarbeitet werden. Die Daten werden nach Abschluss der Aktion gelöscht.</p>
-                    <button type="submit" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-red-800 hover:bg-red-700 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                    <p class="muted">Mit dem Abschicken des Formulars erkläre ich mich einverstanden, dass meine angegebenen Daten für die Organisation der Weihnachtsbaumaktion gespeichert und verarbeitet werden. Die Daten werden nach Abschluss der Aktion gelöscht.</p>
+                    <button class="form-button" type="submit">
                         Ich möchte mitschenken
                     </button>
                 </div>

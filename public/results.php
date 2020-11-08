@@ -38,7 +38,7 @@ $gifts = $query->fetchAll();
 <head>
     <meta charset="UTF-8">
     <title>Weihnachtsbaumaktion: Geschenke</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v1">
 </head>
 <body>
 

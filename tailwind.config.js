@@ -1,6 +1,6 @@
 module.exports = {
     purge: {
         enabled: true,
-        content: ['./public/*.php'],
+        content: ['./public/*.php', './public/*.html'],
     },
 }

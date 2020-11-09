@@ -147,6 +147,10 @@ $gifts = $query->fetchAll();
         <?php endif; ?>
     </div>
 
+    <div class="max-w-screen-xl mx-auto py-4 px-4 sm:px-6 lg:py-6 lg:px-8">
+        <p class="text-sm text-gray-600">Microsite by Johannes Schäfer | <a href="https://www.vecteezy.com/free-vector/christmas-pattern-set" target="_blank" rel="noopener noreferrer">Christmas Pattern Set Vectors by Vecteezy</a> | <a href="datenschutz.html" class="text-red-800">Datenschutz</a> | <a href="impressum.html" class="text-red-800">Impressum</a></p>
+    </div>
+
 </form>
 
 </body>

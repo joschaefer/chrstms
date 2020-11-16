@@ -45,6 +45,11 @@ if (!empty($_POST)) {
     $query->bindValue('id', $gift, PDO::PARAM_INT);
     $query->bindValue('donor', $donor, PDO::PARAM_INT);
     $query->execute();
+
+    $query = $pdo->prepare("SELECT `description` FROM `gifts` WHERE `id` = :id");
+    $query->bindValue('id', $gift, PDO::PARAM_INT);
+    $query->execute();
+    $gift = $query->fetchColumn();
 }
 
 $query = $pdo->prepare("SELECT * FROM `gifts` WHERE `donor` IS NULL ORDER BY `created_at`");
@@ -72,32 +77,29 @@ $gifts = $query->fetchAll();
         </h1>
     </div>
 
-    <div class="mt-5 bg-chrstms">
-        <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-            <h2 class="text-2xl leading-6 font-extrabold tracking-tight text-red-800 bg-gray-100 px-5 py-6 sm:text-3xl sm:leading-8 mb-4 rounded shadow-lg">
-                Geschenke
-                <span class="block text-gray-800 text-lg mt-3 font-normal">Bitte ein Geschenk auswählen und anschließend Kontaktdaten angeben:</span>
-            </h2>
-            <div class="gifts">
-                <?php foreach ($gifts as $gift): ?>
-                    <div class="gift">
-                        <label class="gift-label" for="gift-<?= $gift->id; ?>">
-                            <h3 class="gift-title"><?= htmlentities($gift->name); ?>, <?= htmlentities($gift->age); ?></h3>
-                            <p class="gift-description"><?= htmlentities($gift->description); ?></p>
-                            <p class="text-center"><input type="radio" name="gift" value="<?= $gift->id; ?>" id="gift-<?= $gift->id; ?>" required></p>
-                        </label>
-                    </div>
-                <?php endforeach; ?>
+    <?php if (!isset($name)): ?>
+
+        <div class="mt-5 bg-chrstms">
+            <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+                <h2 class="text-2xl leading-6 font-extrabold tracking-tight text-red-800 bg-gray-100 px-5 py-6 sm:text-3xl sm:leading-8 mb-4 rounded shadow-lg">
+                    Geschenke
+                    <span class="block text-gray-800 text-lg mt-3 font-normal">Bitte ein Geschenk auswählen und anschließend Kontaktdaten angeben:</span>
+                </h2>
+                <div class="gifts">
+                    <?php foreach ($gifts as $gift): ?>
+                        <div class="gift">
+                            <label class="gift-label" for="gift-<?= $gift->id; ?>">
+                                <h3 class="gift-title"><?= htmlentities($gift->name); ?>, <?= htmlentities($gift->age); ?></h3>
+                                <p class="gift-description"><?= htmlentities($gift->description); ?></p>
+                                <p class="text-center"><input type="radio" name="gift" value="<?= $gift->id; ?>" id="gift-<?= $gift->id; ?>" required></p>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="bg-gray-100">
-        <?php if (isset($name)): ?>
-            <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-                <h2 class="text-2xl leading-7 font-extrabold tracking-tight text-red-800">Vielen Dank, <?= htmlentities($name); ?>!</h2>
-            </div>
-        <?php else: ?>
+        <div class="bg-gray-100">
             <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
                 <h2 class="text-2xl leading-7 font-extrabold tracking-tight sm:text-4xl sm:leading-10 mb-6">
                     Kontaktdaten
@@ -144,8 +146,20 @@ $gifts = $query->fetchAll();
                     </button>
                 </div>
             </div>
-        <?php endif; ?>
-    </div>
+        </div>
+
+    <?php else: ?>
+
+        <div class="mt-5 bg-chrstms">
+            <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+                <h2 class="text-2xl leading-6 font-extrabold tracking-tight text-red-800 bg-gray-100 px-5 py-6 sm:text-3xl sm:leading-8 mb-4 rounded shadow-lg">
+                    Vielen Dank, <?= htmlentities($name); ?>!
+                    <span class="block text-gray-800 text-lg mt-3 font-normal">Sie haben sich erfolgreich für das Geschenk „<?= htmlentities($gift); ?>“ eingetragen. Weitere Informationen lassen wir Ihnen umgehend per E-Mail zukommen.</span>
+                </h2>
+            </div>
+        </div>
+
+    <?php endif; ?>
 
     <div class="max-w-screen-xl mx-auto py-4 px-4 sm:px-6 lg:py-6 lg:px-8">
         <p class="text-sm text-gray-600">Microsite by Johannes Schäfer | <a href="https://www.vecteezy.com/free-vector/christmas-pattern-set" target="_blank" rel="noopener noreferrer">Christmas Pattern Set Vectors by Vecteezy</a> | <a href="datenschutz.html" class="text-red-800">Datenschutz</a> | <a href="impressum.html" class="text-red-800">Impressum</a></p>

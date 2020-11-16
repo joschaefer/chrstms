@@ -68,7 +68,7 @@ $gifts = $query->fetchAll();
     <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
         <h1 class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
             RWTH Weihnachtsbaumaktion<br>
-            <span class="text-red-800">Läuft ab <?= Carbon::createFromDate(2020, 12, 5)->diffForHumans(); ?>.</span>
+            <span class="text-red-800">Läuft ab <?= Carbon::createFromDate(2020, 12, 11)->diffForHumans(); ?>.</span>
         </h1>
     </div>
 
@@ -82,7 +82,7 @@ $gifts = $query->fetchAll();
                 <?php foreach ($gifts as $gift): ?>
                     <div class="gift">
                         <label class="gift-label" for="gift-<?= $gift->id; ?>">
-                            <h3 class="gift-title"><?= htmlentities($gift->name); ?>, <?= htmlentities($gift->age); ?> Jahre</h3>
+                            <h3 class="gift-title"><?= htmlentities($gift->name); ?>, <?= htmlentities($gift->age); ?></h3>
                             <p class="gift-description"><?= htmlentities($gift->description); ?></p>
                             <p class="text-center"><input type="radio" name="gift" value="<?= $gift->id; ?>" id="gift-<?= $gift->id; ?>" required></p>
                         </label>

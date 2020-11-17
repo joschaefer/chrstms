@@ -27,7 +27,7 @@ $pdo = new PDO(sprintf('mysql:dbname=%s;host=%s;port=%d;charset=utf8mb4', $setti
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
 
-$query = $pdo->prepare("SELECT `donors`.`name` AS `donor`, `email`, `affiliation`, `description`, `gifts`.`name`, `donors`.`created_at` FROM `gifts` LEFT JOIN `donors` ON `donors`.`id` = `donor` WHERE `donor` IS NOT NULL ORDER BY `gifts`.`updated_at` DESC");
+$query = $pdo->prepare("SELECT `gifts`.`id`, `donors`.`name` AS `donor`, `email`, `affiliation`, `description`, `gifts`.`name`, `donors`.`created_at` FROM `gifts` LEFT JOIN `donors` ON `donors`.`id` = `donor` WHERE `donor` IS NOT NULL ORDER BY `gifts`.`updated_at` DESC");
 $query->execute();
 
 $gifts = $query->fetchAll();
@@ -45,6 +45,7 @@ $gifts = $query->fetchAll();
 <div class="px-5 py-6 max-w-screen-xl mx-auto">
     <table>
         <tr>
+            <th>ID</th>
             <th>Person</th>
             <th>E-Mail</th>
             <th>Team</th>
@@ -53,6 +54,7 @@ $gifts = $query->fetchAll();
         </tr>
         <?php foreach ($gifts as $gift): ?>
             <tr>
+                <td><?= htmlentities($gift->id); ?></td>
                 <td><?= htmlentities($gift->donor); ?></td>
                 <td><?= htmlentities($gift->email); ?></td>
                 <td><?= htmlentities($gift->affiliation); ?></td>

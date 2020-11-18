@@ -38,7 +38,7 @@ $gifts = $query->fetchAll();
 <head>
     <meta charset="UTF-8">
     <title>Weihnachtsbaumaktion: Geschenke</title>
-    <link rel="stylesheet" href="style.css?v1">
+    <link rel="stylesheet" href="style.css?v2">
 </head>
 <body>
 
@@ -56,7 +56,7 @@ $gifts = $query->fetchAll();
             <tr>
                 <td><?= htmlentities($gift->id); ?></td>
                 <td><?= htmlentities($gift->donor); ?></td>
-                <td><a href="mailto:<?= htmlentities($gift->email); ?>?subject=Weihnachtsbaumaktion%202020&body=Hallo%20<?= htmlentities($gift->donor); ?>,%0A%0A"><?= htmlentities($gift->email); ?></a></td>
+                <td><a href="mailto:<?= htmlentities($gift->email); ?>?subject=Weihnachtsbaumaktion%202020&body=Hallo%20<?= htmlentities($gift->donor); ?>,%0A%0A%0A" class="text-red-800 hover:underline"><?= htmlentities($gift->email); ?></a></td>
                 <td><?= htmlentities($gift->affiliation); ?></td>
                 <td><?= htmlentities($gift->description); ?> für <?= htmlentities($gift->name); ?></td>
                 <td><?= (new Carbon($gift->created_at))->diffForHumans(); ?></td>

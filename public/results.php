@@ -27,7 +27,7 @@ $pdo = new PDO(sprintf('mysql:dbname=%s;host=%s;port=%d;charset=utf8mb4', $setti
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
 
-$query = $pdo->prepare("SELECT `gifts`.`id`, `donors`.`name` AS `donor`, `email`, `affiliation`, `description`, `gifts`.`name`, `donors`.`created_at` FROM `gifts` LEFT JOIN `donors` ON `donors`.`id` = `donor` WHERE `donor` IS NOT NULL ORDER BY `gifts`.`updated_at` DESC");
+$query = $pdo->prepare("SELECT `gifts`.`id`, `donors`.`name` AS `donor`, `email`, `affiliation`, `description`, `gifts`.`name`, `gifts`.`age`, `donors`.`created_at` FROM `gifts` LEFT JOIN `donors` ON `donors`.`id` = `donor` WHERE `donor` IS NOT NULL ORDER BY `gifts`.`updated_at` DESC");
 $query->execute();
 
 $gifts = $query->fetchAll();
@@ -58,7 +58,7 @@ $gifts = $query->fetchAll();
                 <td><?= htmlentities($gift->donor); ?></td>
                 <td><a href="mailto:<?= htmlentities($gift->email); ?>?subject=Weihnachtsbaumaktion%202020&body=Hallo%20<?= htmlentities($gift->donor); ?>,%0A%0A%0A" class="text-red-800 hover:underline"><?= htmlentities($gift->email); ?></a></td>
                 <td><?= htmlentities($gift->affiliation); ?></td>
-                <td><?= htmlentities($gift->description); ?> für <?= htmlentities($gift->name); ?></td>
+                <td><?= htmlentities($gift->description); ?> (für <?= htmlentities($gift->name); ?>, <?= htmlentities($gift->age); ?>)</td>
                 <td><?= (new Carbon($gift->created_at))->diffForHumans(); ?></td>
             </tr>
         <?php endforeach; ?>

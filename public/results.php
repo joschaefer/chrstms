@@ -16,7 +16,7 @@ $settings = require __DIR__ . '/../settings.php';
 
 Carbon::setLocale('de_DE');
 
-if (!isset($_GET['pwd']) || empty($_GET['pwd']) || $_GET['pwd'] !== $settings['pwd']) {
+if (empty($_GET['pwd']) || $_GET['pwd'] !== $settings['pwd']) {
     http_response_code(403);
     exit;
 }
@@ -30,7 +30,7 @@ $pdo = new PDO(sprintf('mysql:dbname=%s;host=%s;port=%d;charset=utf8mb4', $setti
 $query = $pdo->prepare("SELECT `gifts`.`id`, `donors`.`name` AS `donor`, `email`, `affiliation`, `description`, `gifts`.`name`, `gifts`.`age`, `donors`.`created_at` FROM `gifts` LEFT JOIN `donors` ON `donors`.`id` = `donor` WHERE `donor` IS NOT NULL ORDER BY `gifts`.`updated_at` DESC");
 $query->execute();
 
-$gifts = $query->fetchAll();
+$donations = $query->fetchAll();
 
 ?>
 <!DOCTYPE html>
@@ -52,14 +52,14 @@ $gifts = $query->fetchAll();
             <th>Geschenk</th>
             <th>Datum</th>
         </tr>
-        <?php foreach ($gifts as $gift): ?>
+        <?php foreach ($donations as $donation): ?>
             <tr>
-                <td><?= htmlentities($gift->id); ?></td>
-                <td><?= htmlentities($gift->donor); ?></td>
-                <td><a href="mailto:<?= htmlentities($gift->email); ?>?subject=Weihnachtsbaumaktion%202020&body=Hallo%20<?= htmlentities($gift->donor); ?>,%0A%0A%0A" class="text-red-800 hover:underline"><?= htmlentities($gift->email); ?></a></td>
-                <td><?= htmlentities($gift->affiliation); ?></td>
-                <td><?= htmlentities($gift->description); ?> (für <?= htmlentities($gift->name); ?>, <?= htmlentities($gift->age); ?>)</td>
-                <td><?= (new Carbon($gift->created_at))->diffForHumans(); ?></td>
+                <td><?= $donation->id ?></td>
+                <td><?= htmlentities($donation->donor); ?></td>
+                <td><a href="mailto:<?= htmlentities($donation->email); ?>?subject=Weihnachtsbaumaktion%202022&body=Hallo%20<?= htmlentities($donation->donor); ?>,%0A%0A%0A" class="text-red-800 hover:underline"><?= htmlentities($donation->email); ?></a></td>
+                <td><?= htmlentities($donation->affiliation); ?></td>
+                <td><?= htmlentities($donation->description); ?> (für <?= htmlentities($donation->name); ?>, <?= $donation->gender === 'w' ? 'Mädchen' : 'Junge' ?>, <?= htmlentities($donation->age); ?>)</td>
+                <td><?= (new Carbon($donation->created_at))->diffForHumans(); ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

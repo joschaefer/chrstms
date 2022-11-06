@@ -52,7 +52,7 @@ if (!empty($_POST)) {
     $gift = $query->fetchColumn();
 }
 
-$query = $pdo->prepare("SELECT * FROM `gifts` WHERE `donor` IS NULL ORDER BY `created_at`");
+$query = $pdo->prepare("SELECT * FROM `gifts` WHERE `donor` IS NULL ORDER BY `name`");
 $query->execute();
 
 $gifts = $query->fetchAll();
@@ -72,9 +72,9 @@ $gifts = $query->fetchAll();
 
     <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
         <h1 class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
-            RWTH Weihnachtsbaumaktion<br>
-            <span class="text-red-800">Läuft ab <?= Carbon::createFromDate(2020, 12, 11)->diffForHumans(); ?>.</span>
+            RWTH Weihnachtsbaumaktion
         </h1>
+        <p class="text-red-800">Bitte bis zum 3.12.2022 für ein Geschenk eintragen und bis zum 10.12.2022 an den Lehrstuhl schicken. Die Übergabe der Geschenke erfolgt am 15.12.2022.</p>
     </div>
 
     <?php if (!isset($name)): ?>
@@ -89,7 +89,7 @@ $gifts = $query->fetchAll();
                     <?php foreach ($gifts as $gift): ?>
                         <div class="gift">
                             <label class="gift-label" for="gift-<?= $gift->id; ?>">
-                                <h3 class="gift-title"><?= htmlentities($gift->name); ?>, <?= htmlentities($gift->age); ?></h3>
+                                <h3 class="gift-title"><?= htmlentities($gift->name); ?>: <?= $gift->gender === 'w' ? 'Mädchen' : 'Junge' ?>, <?= htmlentities($gift->age); ?></h3>
                                 <p class="gift-description"><?= htmlentities($gift->description); ?></p>
                                 <p class="text-center"><input type="radio" name="gift" value="<?= $gift->id; ?>" id="gift-<?= $gift->id; ?>" required></p>
                             </label>
@@ -132,6 +132,7 @@ $gifts = $query->fetchAll();
                                     <option value="digitalHUB">digitalHUB</option>
                                     <option value="Lehrstuhl">WIN-Lehrstuhl</option>
                                     <option value="ZHV">Zentrale Hochschulverwaltung</option>
+                                    <option value="Rotaract">Rotaract</option>
                                     <option value="Andere Einrichtung">Andere Einrichtung</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
